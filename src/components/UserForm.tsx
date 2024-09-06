@@ -94,7 +94,7 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>{user ? 'Edit User' : 'Add User'}</DialogTitle>
+      <DialogTitle style={{fontWeight: 'bold'}}>{user ? 'Edit User' : 'Add User'}</DialogTitle>
       <DialogContent>
         {/* Name Field */}
         <FormControl fullWidth margin="dense">

@@ -111,7 +111,7 @@ const HomePage: React.FC = () => {
         onSave={handleSave}
         emailError={emailError}
       />
-      {/* Confirmation Dialog */}
+      {/* Confirmation Dialog for Delete*/}
       <Dialog
         open={!!confirmDelete}
         onClose={() => setConfirmDelete(null)}

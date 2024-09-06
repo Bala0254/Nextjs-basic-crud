@@ -72,7 +72,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete, onSearch
   return (
     <Box>
       <Box mb={2} display="flex" justifyContent="space-between" style={{marginTop: 32, padding: 12}} alignItems="center">
-        <Typography variant="h2" style={{fontWeight: 'bold'}}>Users</Typography>
+        <Typography variant="h4" style={{fontWeight: 'bold'}}>Users</Typography>
         <Box display="flex" alignItems="center">
           <TextField
             variant="outlined"
