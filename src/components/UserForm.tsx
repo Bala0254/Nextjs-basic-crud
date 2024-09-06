@@ -24,11 +24,12 @@ const initialFormData: User = {
   address: { line1: '', line2: '', state: '', city: '', pin: '' },
 };
 
-const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailError }) => {
+const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailError = null }) => {
   const [formData, setFormData] = useState<User>(initialFormData);
   const [errors, setErrors] = useState<any>({});
   const [states, setStates] = useState<string[]>([]);
   const [cities, setCities] = useState<string[]>([]);
+  const [localEmailError, setLocalEmailError] = useState<string | null>(emailError);
 
   useEffect(() => {
     if (user) {
@@ -54,12 +55,19 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
     }
   }, [formData.address.state]);
 
+  useEffect(() => {
+    setLocalEmailError(emailError || null);
+  }, [emailError]);
+
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setFormData(prev => ({
       ...prev,
       [name!]: value as string,
     }));
+    if (name === 'email') {
+      setLocalEmailError(null);
+    }
   };
 
   const handleAddressChange = (event: any) => {
@@ -72,16 +80,15 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
 
   const handleSave = () => {
     const validationErrors = validateUser(formData);
-    
-    if (Object.keys(validationErrors).length === 0) {
-      if (emailError) {
-        setErrors({ email: emailError });
-        return;
-      }
+
+    if (Object.keys(validationErrors).length === 0 && !localEmailError) {
       onSave(formData);
-      setFormData(prev => ({ ...prev, email: '' }));
+      setFormData(prev => ({ ...prev, email: '' })); // Clear only the email field
     } else {
       setErrors(validationErrors);
+      if (localEmailError) {
+        setErrors((prev: any) => ({ ...prev, email: localEmailError }));
+      }
     }
   };
 
@@ -122,8 +129,8 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
             variant="outlined"
             value={formData.email}
             onChange={handleChange}
-            error={!!errors.email || !!emailError}
-            helperText={errors.email || emailError}
+            error={!!errors.email || !!localEmailError}
+            helperText={errors.email || localEmailError || ''}
             className="mrgB16"
             slotProps={{
               input: {
