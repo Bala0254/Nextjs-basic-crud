@@ -22,6 +22,8 @@ import {
   ExpandLess as ExpandLessIcon
 } from '@mui/icons-material';
 import { User, Gender } from '@/utils/types';
+import Image from 'next/image';
+import noDataImage from '@/assets/no-data.png';
 
 interface UserTableProps {
   users: User[];
@@ -66,7 +68,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete, onSearch
 
   return (
     <Box>
-      <Box mb={2} display="flex" justifyContent="space-between" style={{marginTop: 32}} alignItems="center">
+      <Box mb={2} display="flex" justifyContent="space-between" style={{marginTop: 32, padding: 12}} alignItems="center">
         <Typography variant="h4">Users</Typography>
         <Box display="flex" alignItems="center">
           <TextField
@@ -86,7 +88,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete, onSearch
           </Button>
         </Box>
       </Box>
-      <TableContainer>
+      <TableContainer style={{padding: 12}}>
         <Table>
           <TableHead>
             <TableRow>
@@ -170,7 +172,8 @@ const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete, onSearch
                 ))
             ) : (
               <TableRow>
-                <TableCell colSpan={7} align="center">
+                <TableCell colSpan={7} align="center" style={{padding: '56px'}}>
+                  <Image src={noDataImage} alt="No Data Found" height={200} width={250}/>
                   <Typography variant="h6">No Data Found</Typography>
                 </TableCell>
               </TableRow>

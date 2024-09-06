@@ -5,6 +5,7 @@ import UserTable from '../components/UserTable';
 import { User, Gender } from '@/utils/types';
 import { addUser, updateUser, deleteUser, getUsers } from '@/utils/userService';
 import UserForm from './../components/UserForm';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
 
 const HomePage: React.FC = () => {
   const [users, setUsers] = useState<User[]>(getUsers());
@@ -77,13 +78,24 @@ const HomePage: React.FC = () => {
         onClose={handleCloseForm}
         onSave={handleSave}
       />
-      {confirmDelete && (
-        <div>
+      {/* Confirmation Dialog */}
+      <Dialog
+        open={!!confirmDelete}
+        onClose={() => setConfirmDelete(null)}
+      >
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
           <p>Are you sure you want to delete this user?</p>
-          <button onClick={handleConfirmDelete}>Yes</button>
-          <button onClick={() => setConfirmDelete(null)}>No</button>
-        </div>
-      )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmDelete(null)} color="primary">
+            No
+          </Button>
+          <Button onClick={handleConfirmDelete} color="primary" style={{backgroundColor: '#ef7616', color: 'white'}}>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

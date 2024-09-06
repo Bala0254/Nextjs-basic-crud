@@ -12,10 +12,8 @@
   display: none;
 }
 
-.search-box{
-  margin-right: 12px;
-  padding: 8px;
-  outline: none;
+.MuiTableHead-root {
+  background-color: #ef7616;
 }
 
 .mrgB8{

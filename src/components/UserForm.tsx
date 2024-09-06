@@ -97,6 +97,11 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave }) => {
             error={!!errors.name}
             helperText={errors.name}
             className="mrgB16"
+            slotProps={{
+              input: {
+                inputProps: { maxLength: 50 },
+              },
+            }}
           />
         </FormControl>
 
@@ -114,6 +119,11 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave }) => {
             error={!!errors.email}
             helperText={errors.email}
             className="mrgB16"
+            slotProps={{
+              input: {
+                inputProps: { maxLength: 255 },
+              },
+            }}
           />
         </FormControl>
 
@@ -131,6 +141,11 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave }) => {
             error={!!errors.linkedin}
             helperText={errors.linkedin}
             className="mrgB16"
+            slotProps={{
+              input: {
+                inputProps: { maxLength: 255 },
+              },
+            }}
           />
         </FormControl>
 
@@ -236,12 +251,17 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave }) => {
             error={!!errors.address?.pin}
             helperText={errors.address?.pin}
             className="mrgB16"
+            slotProps={{
+              input: {
+                inputProps: { maxLength: 6 },
+              },
+            }}
           />
         </FormControl>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">Cancel</Button>
-        <Button onClick={handleSave} color="primary">Submit</Button>
+        <Button onClick={onClose} color="primary" >Cancel</Button>
+        <Button onClick={handleSave} style={{backgroundColor: '#ef7616', color: 'white'}} >Submit</Button>
       </DialogActions>
     </Dialog>
   );
