@@ -76,6 +76,11 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
   const handleAddressChange = (event: any) => {
     const { name, value } = event.target;
     const trimmedValue = trimLeadingSpaces(value);
+  
+    if (name === 'pin' && !/^\d*$/.test(trimmedValue)) {
+      return;
+    }
+  
     setFormData(prev => ({
       ...prev,
       address: { ...prev.address, [name!]: trimmedValue as string },
