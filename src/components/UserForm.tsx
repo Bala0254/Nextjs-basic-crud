@@ -59,11 +59,14 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
     setLocalEmailError(emailError || null);
   }, [emailError]);
 
+  const trimLeadingSpaces = (value: string) => value.replace(/^\s+/, '');
+
   const handleChange = (event: any) => {
     const { name, value } = event.target;
+    const trimmedValue = trimLeadingSpaces(value);
     setFormData(prev => ({
       ...prev,
-      [name!]: value as string,
+      [name!]: trimmedValue as string,
     }));
     if (name === 'email') {
       setLocalEmailError(null);
@@ -72,11 +75,13 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
 
   const handleAddressChange = (event: any) => {
     const { name, value } = event.target;
+    const trimmedValue = trimLeadingSpaces(value);
     setFormData(prev => ({
       ...prev,
-      address: { ...prev.address, [name!]: value as string },
+      address: { ...prev.address, [name!]: trimmedValue as string },
     }));
   };
+  
 
   const handleSave = () => {
     const validationErrors = validateUser(formData);

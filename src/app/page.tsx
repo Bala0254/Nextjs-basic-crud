@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import UserTable from '../components/UserTable';
 import { User } from '@/utils/types';
 import { addUser, updateUser, deleteUser, getUsers } from '@/utils/userService';
-import UserForm from './../components/UserForm';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
+import UserForm from '@/components/UserForm';
+import UserTable from '@/components/UserTable';
+import ConfirmationDialog from '@/components/ConfirmationDialog'; // Import the new component
 
 const HomePage: React.FC = () => {
   const [users, setUsers] = useState<User[]>(getUsers());
@@ -111,24 +111,12 @@ const HomePage: React.FC = () => {
         onSave={handleSave}
         emailError={emailError}
       />
-      {/* Confirmation Dialog for Delete*/}
-      <Dialog
+      <ConfirmationDialog
         open={!!confirmDelete}
         onClose={() => setConfirmDelete(null)}
-      >
-        <DialogTitle>Confirm Deletion</DialogTitle>
-        <DialogContent>
-          <p>Are you sure you want to delete this user?</p>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setConfirmDelete(null)} color="primary">
-            No
-          </Button>
-          <Button onClick={handleConfirmDelete} color="primary" style={{backgroundColor: '#ef7616', color: 'white'}}>
-            Yes
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onConfirm={handleConfirmDelete}
+        message="Are you sure you want to delete this user?"
+      />
     </div>
   );
 };
