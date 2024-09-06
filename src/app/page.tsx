@@ -1,0 +1,91 @@
+'use client';
+
+import React, { useState } from 'react';
+import UserTable from '../components/UserTable';
+import { User, Gender } from '@/utils/types';
+import { addUser, updateUser, deleteUser, getUsers } from '@/utils/userService';
+import UserForm from './../components/UserForm';
+
+const HomePage: React.FC = () => {
+  const [users, setUsers] = useState<User[]>(getUsers());
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [formOpen, setFormOpen] = useState<boolean>(false);
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+
+  const handleEdit = (user: User | null) => {
+    setSelectedUser(user);
+    setFormOpen(true);
+  };
+
+  const handleDelete = (userId: string) => {
+    setConfirmDelete(userId);
+  };
+
+  const handleConfirmDelete = () => {
+    if (confirmDelete) {
+      deleteUser(confirmDelete);
+      setUsers(getUsers());
+      setConfirmDelete(null);
+    }
+  };
+
+  const handleCloseForm = () => {
+    setFormOpen(false);
+    setSelectedUser(null);
+  };
+
+  const handleSave = (user: User) => {
+    if (user.id) {
+      updateUser(user);
+    } else {
+      addUser({ ...user, id: Date.now().toString() });
+    }
+    setUsers(getUsers());
+    handleCloseForm();
+  };
+
+  const handleSearch = (query: string) => {
+    const filteredUsers = getUsers().filter(user => user.name.toLowerCase().includes(query.toLowerCase()));
+    setUsers(filteredUsers);
+  };
+
+  const handleSort = (order: 'asc' | 'desc', orderBy: string) => {
+    const sortedUsers = [...getUsers()].sort((a, b) => {
+      if (orderBy === 'name') {
+        return order === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+      }
+      if (orderBy === 'email') {
+        return order === 'asc' ? a.email.localeCompare(b.email) : b.email.localeCompare(a.email);
+      }
+      return 0;
+    });
+    setUsers(sortedUsers);
+  };
+
+  return (
+    <div>
+      <UserTable
+        users={users}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        onSearch={handleSearch}
+        onSort={handleSort}
+      />
+      <UserForm
+        open={formOpen}
+        user={selectedUser}
+        onClose={handleCloseForm}
+        onSave={handleSave}
+      />
+      {confirmDelete && (
+        <div>
+          <p>Are you sure you want to delete this user?</p>
+          <button onClick={handleConfirmDelete}>Yes</button>
+          <button onClick={() => setConfirmDelete(null)}>No</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default HomePage;

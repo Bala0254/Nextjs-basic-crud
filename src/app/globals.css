@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.MuiInputLabel-root{
+  display: none;
+}
+
+.MuiOutlinedInput-notchedOutline > legend {
+  display: none;
+}
+
+.search-box{
+  margin-right: 12px;
+  padding: 8px;
+  outline: none;
+}
+
+.mrgB8{
+  margin-bottom: 8px;
+}
+
+.mrgB16{
+  margin-bottom: 16px;
+}
