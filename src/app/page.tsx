@@ -71,13 +71,26 @@ const HomePage: React.FC = () => {
 
   const handleSort = (order: 'asc' | 'desc', orderBy: string) => {
     const sortedUsers = [...getUsers()].sort((a, b) => {
-      if (orderBy === 'name') {
-        return order === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+      switch (orderBy) {
+        case 'name':
+          return order === 'asc' 
+            ? a.name.localeCompare(b.name) 
+            : b.name.localeCompare(a.name);
+        case 'email':
+          return order === 'asc' 
+            ? a.email.localeCompare(b.email) 
+            : b.email.localeCompare(a.email);
+        case 'linkedin':
+          return order === 'asc' 
+            ? a.linkedin.localeCompare(b.linkedin) 
+            : b.linkedin.localeCompare(a.linkedin);
+        case 'gender':
+          return order === 'asc' 
+            ? a.gender.localeCompare(b.gender) 
+            : b.gender.localeCompare(a.gender);
+        default:
+          return 0;
       }
-      if (orderBy === 'email') {
-        return order === 'asc' ? a.email.localeCompare(b.email) : b.email.localeCompare(a.email);
-      }
-      return 0;
     });
     setUsers(sortedUsers);
   };
