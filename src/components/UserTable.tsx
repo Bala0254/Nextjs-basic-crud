@@ -27,7 +27,7 @@ import noDataImage from '@/assets/no-data.png';
 
 interface UserTableProps {
   users: User[];
-  onEdit: (user: User | null) => void; // Changed to allow null for adding new users
+  onEdit: (user: User | null) => void;
   onDelete: (userId: string) => void;
   onSearch: (query: string) => void;
   onSort: (order: 'asc' | 'desc', orderBy: string) => void;
@@ -85,7 +85,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete, onSearch
           <Button
             variant="contained"
             color="primary"
-            onClick={() => onEdit(null)} // Pass null to add a new user
+            onClick={() => onEdit(null)}
           >
             ADD
           </Button>

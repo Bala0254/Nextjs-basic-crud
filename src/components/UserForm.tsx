@@ -83,7 +83,7 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
 
     if (Object.keys(validationErrors).length === 0 && !localEmailError) {
       onSave(formData);
-      setFormData(prev => ({ ...prev, email: '' })); // Clear only the email field
+      setFormData(prev => ({ ...prev, email: '' }));
     } else {
       setErrors(validationErrors);
       if (localEmailError) {
@@ -98,7 +98,7 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
       <DialogContent>
         {/* Name Field */}
         <FormControl fullWidth margin="dense">
-          <label className='mrgB8' htmlFor="name">Name</label>
+          <label style={{marginBottom: '8px'}} htmlFor="name">Name</label>
           <TextField
             id="name"
             name="name"
@@ -109,7 +109,7 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
             onChange={handleChange}
             error={!!errors.name}
             helperText={errors.name}
-            className="mrgB16"
+            style={{marginBottom: '16px'}}
             slotProps={{
               input: {
                 inputProps: { maxLength: 50 },
@@ -120,7 +120,7 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
 
         {/* Email Field */}
         <FormControl fullWidth margin="dense">
-          <label className='mrgB8' htmlFor="email">Email</label>
+          <label style={{marginBottom: '8px'}} htmlFor="email">Email</label>
           <TextField
             id="email"
             name="email"
@@ -131,7 +131,7 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
             onChange={handleChange}
             error={!!errors.email || !!localEmailError}
             helperText={errors.email || localEmailError || ''}
-            className="mrgB16"
+            style={{marginBottom: '16px'}}
             slotProps={{
               input: {
                 inputProps: { maxLength: 255 },
@@ -142,7 +142,7 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
 
         {/* LinkedIn URL Field */}
         <FormControl fullWidth margin="dense">
-          <label className='mrgB8' htmlFor="linkedin">LinkedIn URL</label>
+          <label style={{marginBottom: '8px'}} htmlFor="linkedin">LinkedIn URL</label>
           <TextField
             id="linkedin"
             name="linkedin"
@@ -153,7 +153,7 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
             onChange={handleChange}
             error={!!errors.linkedin}
             helperText={errors.linkedin}
-            className="mrgB16"
+            style={{marginBottom: '16px'}}
             slotProps={{
               input: {
                 inputProps: { maxLength: 255 },
@@ -164,12 +164,12 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
 
         {/* Gender Field */}
         <FormControl fullWidth margin="dense" error={!!errors.gender}>
-          <label className='mrgB8'>Gender</label>
+          <label style={{marginBottom: '8px'}}>Gender</label>
           <Select
             name="gender"
             value={formData.gender}
             onChange={handleChange}
-            className="mrgB16"
+            style={{marginBottom: '16px'}}
           >
             {Object.values(Gender).map(gender => (
               <MenuItem key={gender} value={gender}>
@@ -183,7 +183,7 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
         {/* Address Fields */}
         {/* Address Line 1 */}
         <FormControl fullWidth margin="dense">
-          <label className='mrgB8' htmlFor="line1">Address Line 1</label>
+          <label style={{marginBottom: '8px'}} htmlFor="line1">Address Line 1</label>
           <TextField
             id="line1"
             name="line1"
@@ -194,13 +194,13 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
             onChange={handleAddressChange}
             error={!!errors.address?.line1}
             helperText={errors.address?.line1}
-            className="mrgB16"
+            style={{marginBottom: '16px'}}
           />
         </FormControl>
 
         {/* Address Line 2 */}
         <FormControl fullWidth margin="dense">
-          <label className='mrgB8' htmlFor="line2">Address Line 2</label>
+          <label style={{marginBottom: '8px'}} htmlFor="line2">Address Line 2</label>
           <TextField
             id="line2"
             name="line2"
@@ -211,18 +211,18 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
             onChange={handleAddressChange}
             error={!!errors.address?.line2}
             helperText={errors.address?.line2}
-            className="mrgB16"
+            style={{marginBottom: '16px'}}
           />
         </FormControl>
 
         {/* State Field */}
         <FormControl fullWidth margin="dense" error={!!errors.address?.state}>
-          <label className='mrgB8'>State</label>
+          <label style={{marginBottom: '8px'}}>State</label>
           <Select
             name="state"
             value={formData.address.state}
             onChange={handleAddressChange}
-            className="mrgB16"
+            style={{marginBottom: '16px'}}
           >
             {states.map(state => (
               <MenuItem key={state} value={state}>
@@ -235,12 +235,12 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
 
         {/* City Field */}
         <FormControl fullWidth margin="dense" error={!!errors.address?.city}>
-          <label className='mrgB8'>City</label>
+          <label style={{marginBottom: '8px'}}>City</label>
           <Select
             name="city"
             value={formData.address.city}
             onChange={handleAddressChange}
-            className="mrgB16"
+            style={{marginBottom: '16px'}}
           >
             {cities.map(city => (
               <MenuItem key={city} value={city}>
@@ -253,7 +253,7 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
 
         {/* PIN Field */}
         <FormControl fullWidth margin="dense">
-          <label className='mrgB8' htmlFor="pin">PIN Code</label>
+          <label style={{marginBottom: '8px'}} htmlFor="pin">PIN Code</label>
           <TextField
             id="pin"
             name="pin"
@@ -264,7 +264,7 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailE
             onChange={handleAddressChange}
             error={!!errors.address?.pin}
             helperText={errors.address?.pin}
-            className="mrgB16"
+            style={{marginBottom: '16px'}}
             slotProps={{
               input: {
                 inputProps: { maxLength: 6 },
