@@ -21,7 +21,7 @@ import {
   ExpandMore as ExpandMoreIcon,
   ExpandLess as ExpandLessIcon
 } from '@mui/icons-material';
-import { User, Gender } from '@/utils/types';
+import { User } from '@/utils/types';
 import Image from 'next/image';
 import noDataImage from '@/assets/no-data.png';
 
@@ -62,14 +62,17 @@ const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete, onSearch
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-    onSearch(event.target.value);
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+    
+    // Set filtered users
+    onSearch(query);
   };
 
   return (
     <Box>
       <Box mb={2} display="flex" justifyContent="space-between" style={{marginTop: 32, padding: 12}} alignItems="center">
-        <Typography variant="h4">Users</Typography>
+        <Typography variant="h2" style={{fontWeight: 'bold'}}>Users</Typography>
         <Box display="flex" alignItems="center">
           <TextField
             variant="outlined"
@@ -135,7 +138,6 @@ const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete, onSearch
           <TableBody>
             {users.length > 0 ? (
               users
-                .filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(user => (
                   <React.Fragment key={user.id}>

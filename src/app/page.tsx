@@ -60,9 +60,14 @@ const HomePage: React.FC = () => {
   };
 
   const handleSearch = (query: string) => {
-    const filteredUsers = getUsers().filter(user => user.name.toLowerCase().includes(query.toLowerCase()));
+    const filteredUsers = getUsers().filter(user => 
+      user.name.toLowerCase().includes(query) ||
+      user.email.toLowerCase().includes(query) ||
+      user.linkedin.toLowerCase().includes(query) ||
+      user.gender.toLowerCase().includes(query)
+    );
     setUsers(filteredUsers);
-  };
+  };  
 
   const handleSort = (order: 'asc' | 'desc', orderBy: string) => {
     const sortedUsers = [...getUsers()].sort((a, b) => {
