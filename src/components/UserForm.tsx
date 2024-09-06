@@ -12,6 +12,7 @@ interface UserFormProps {
   user?: User | null;
   onClose: () => void;
   onSave: (user: User) => void;
+  emailError?: string | null;
 }
 
 const initialFormData: User = {
@@ -23,8 +24,8 @@ const initialFormData: User = {
   address: { line1: '', line2: '', state: '', city: '', pin: '' },
 };
 
-const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave }) => {
-  const [formData, setFormData] = useState<User | any>(initialFormData);
+const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave, emailError }) => {
+  const [formData, setFormData] = useState<User>(initialFormData);
   const [errors, setErrors] = useState<any>({});
   const [states, setStates] = useState<string[]>([]);
   const [cities, setCities] = useState<string[]>([]);
@@ -39,7 +40,7 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave }) => {
 
   useEffect(() => {
     if (!open) {
-      setFormData(initialFormData);
+      setFormData(user || initialFormData);
       setErrors({});
     }
   }, [open]);
@@ -55,25 +56,30 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave }) => {
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
-    setFormData((prev: any) => ({
+    setFormData(prev => ({
       ...prev,
-      [name]: value as string,
+      [name!]: value as string,
     }));
   };
 
   const handleAddressChange = (event: any) => {
     const { name, value } = event.target;
-    setFormData((prev: any) => ({
+    setFormData(prev => ({
       ...prev,
-      address: { ...prev.address, [name]: value as string },
+      address: { ...prev.address, [name!]: value as string },
     }));
   };
 
   const handleSave = () => {
     const validationErrors = validateUser(formData);
+    
     if (Object.keys(validationErrors).length === 0) {
+      if (emailError) {
+        setErrors({ email: emailError });
+        return;
+      }
       onSave(formData);
-      setFormData(initialFormData);
+      setFormData(prev => ({ ...prev, email: '' }));
     } else {
       setErrors(validationErrors);
     }
@@ -116,8 +122,8 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave }) => {
             variant="outlined"
             value={formData.email}
             onChange={handleChange}
-            error={!!errors.email}
-            helperText={errors.email}
+            error={!!errors.email || !!emailError}
+            helperText={errors.email || emailError}
             className="mrgB16"
             slotProps={{
               input: {
@@ -167,7 +173,8 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave }) => {
           {errors.gender && <FormHelperText>{errors.gender}</FormHelperText>}
         </FormControl>
 
-        {/* Address Line 1 Field */}
+        {/* Address Fields */}
+        {/* Address Line 1 */}
         <FormControl fullWidth margin="dense">
           <label className='mrgB8' htmlFor="line1">Address Line 1</label>
           <TextField
@@ -184,7 +191,7 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave }) => {
           />
         </FormControl>
 
-        {/* Address Line 2 Field */}
+        {/* Address Line 2 */}
         <FormControl fullWidth margin="dense">
           <label className='mrgB8' htmlFor="line2">Address Line 2</label>
           <TextField
@@ -260,8 +267,8 @@ const UserForm: React.FC<UserFormProps> = ({ open, user, onClose, onSave }) => {
         </FormControl>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary" >Cancel</Button>
-        <Button onClick={handleSave} style={{backgroundColor: '#ef7616', color: 'white'}} >Submit</Button>
+        <Button onClick={onClose} color="primary">Cancel</Button>
+        <Button onClick={handleSave} style={{ backgroundColor: '#ef7616', color: 'white' }}>Submit</Button>
       </DialogActions>
     </Dialog>
   );

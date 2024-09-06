@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import UserTable from '../components/UserTable';
-import { User, Gender } from '@/utils/types';
+import { User } from '@/utils/types';
 import { addUser, updateUser, deleteUser, getUsers } from '@/utils/userService';
 import UserForm from './../components/UserForm';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
@@ -12,6 +12,12 @@ const HomePage: React.FC = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [formOpen, setFormOpen] = useState<boolean>(false);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
+
+  // Check if the email already exists
+  const isEmailUnique = (email: string, userId?: string): boolean => {
+    return users.every(user => user.email.toLowerCase() !== email.toLowerCase() || user.id === userId);
+  };
 
   const handleEdit = (user: User | null) => {
     setSelectedUser(user);
@@ -33,9 +39,17 @@ const HomePage: React.FC = () => {
   const handleCloseForm = () => {
     setFormOpen(false);
     setSelectedUser(null);
+    setEmailError(null);
   };
 
   const handleSave = (user: User) => {
+    if (!isEmailUnique(user.email, user.id)) {
+      setEmailError('Email already exists');
+      return;
+    }
+    
+    setEmailError(null);
+
     if (user.id) {
       updateUser(user);
     } else {
@@ -77,6 +91,7 @@ const HomePage: React.FC = () => {
         user={selectedUser}
         onClose={handleCloseForm}
         onSave={handleSave}
+        emailError={emailError}
       />
       {/* Confirmation Dialog */}
       <Dialog
