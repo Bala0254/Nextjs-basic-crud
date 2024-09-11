@@ -1,4 +1,4 @@
-export const getStates = () => [
+  export const getStates = () => [
     'California', 'New York', 'Texas', 'Florida', 'Illinois'
   ];
   
@@ -17,11 +17,4 @@ export const getStates = () => [
       default:
         return [];
     }
-  };
-  
-  export enum Gender {
-    Male = 'Male',
-    Female = 'Female',
-    Other = 'Other',
-  }
-  
+  };  
